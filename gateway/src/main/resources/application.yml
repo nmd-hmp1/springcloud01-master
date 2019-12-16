@@ -1,0 +1,25 @@
+server:
+  # �˿ں�
+  port: 7403
+spring:
+  # �ڵ�1�ı�ǩ
+#  profiles: peer1
+  application:
+    # �������ƣ�ע�⣺���нڵ�ķ�������Ҫ����һ��
+    name: gateway
+eureka:
+  client:
+    # ?????????
+    serviceUrl:
+      defaultZone: http://peer1:7101/eureka/,http://peer2:7102/eureka/,http://peer3:7103/eureka/
+#zuul:
+#  routes:
+#   api-aaa:
+#    path: /mv/**
+#    url: https://mvnrepository.com/
+#   api-cons:
+#    path: /cons/**
+#    serviceId: eureka-consumer02
+#          https://mvnrepository.com/
+#         zuul.routes.api-aaa.path=/mv/**
+#         zuul.routes.api-aaa.url=https://mvnrepository.com/
