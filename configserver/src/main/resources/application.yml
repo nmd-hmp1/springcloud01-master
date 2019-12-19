@@ -1,28 +1,29 @@
-# ¶Ë¿ÚºÅ
+# ï¿½Ë¿Úºï¿½
 server:
   port: 7501
-# ·şÎñÃû³Æ
+# ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 spring:
   application:
     name: config-server
   profiles:
-    ## ÅäÖÃ±¾µØÅäÖÃÎÄ¼ş±ØĞë¼¤»îÄÚÖÃµÄnative,ÈçÈô»¹Ğè¼¤»îÆäËûµÄ¾ÍÅäÖÃ¶à¸ö£¬Èç£ºnative,dev/qas/prd
+    ## ï¿½ï¿½ï¿½Ã±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ë¼¤ï¿½ï¿½ï¿½ï¿½ï¿½Ãµï¿½native,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½è¼¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¾ï¿½ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½ï¿½ç£ºnative,dev/qas/prd
     active: native
 #    active: native,prd
   cloud:
     config:
       server:
         native:
-          # ÅäÖÃÎÄ¼ş´æ·ÅÂ·¾¶£¬¶à¸öÂ·¾¶Ö®¼ä¿ÉÒÔÓÃ¶ººÅ·Ö¸ô
+          # ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½Ö®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½Å·Ö¸ï¿½
 #          search-locations: classpath:/cnf
           search-locations: classpath:/cnf,classpath:/cnf/datasource,classpath:/cnf/redis
 
 
-# Ïò×¢²áÖĞĞÄ×¢²á
-# ·şÎñ×¢²áÓë·¢ÏÖÏà¹ØÅäÖÃ
+# ï¿½ï¿½×¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½
+# ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½ï¿½ë·¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 eureka:
   client:
-    # ×¢²áÖĞĞÄµØÖ·
+    # ×¢ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½Ö·
     serviceUrl:
-      defaultZone: http://peer1:7101/eureka/,http://peer2:7102/eureka/,http://peer3:7103/eureka/
+      defaultZone: http://peer1:7101/eureka/
+#      ,http://peer2:7102/eureka/,http://peer3:7103/eureka/
 

@@ -1,100 +1,65 @@
 package com.zking.eurekaprovider.model;
 
-import java.util.Date;
-
 public class User {
-    private Integer uid;
+    private Long userId;
 
-    private String uname;
+    private String userAccountnmber;
 
-    private String usex;
+    private String userCipher;
 
-    private Integer uage;
+    private String userKey;
 
-    private String tel;
+    private Integer locked;
 
-    private String card;
-
-    private Date createdata;
-
-    private Integer state;
-
-    public User(Integer uid, String uname, String usex, Integer uage, String tel, String card, Date createdata, Integer state) {
-        this.uid = uid;
-        this.uname = uname;
-        this.usex = usex;
-        this.uage = uage;
-        this.tel = tel;
-        this.card = card;
-        this.createdata = createdata;
-        this.state = state;
+    public User(Long userId, String userAccountnmber, String userCipher, String userKey, Integer locked) {
+        this.userId = userId;
+        this.userAccountnmber = userAccountnmber;
+        this.userCipher = userCipher;
+        this.userKey = userKey;
+        this.locked = locked;
     }
 
     public User() {
         super();
     }
 
-    public Integer getUid() {
-        return uid;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUid(Integer uid) {
-        this.uid = uid;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    public String getUname() {
-        return uname;
+    public String getUserAccountnmber() {
+        return userAccountnmber;
     }
 
-    public void setUname(String uname) {
-        this.uname = uname;
+    public void setUserAccountnmber(String userAccountnmber) {
+        this.userAccountnmber = userAccountnmber;
     }
 
-    public String getUsex() {
-        return usex;
+    public String getUserCipher() {
+        return userCipher;
     }
 
-    public void setUsex(String usex) {
-        this.usex = usex;
+    public void setUserCipher(String userCipher) {
+        this.userCipher = userCipher;
     }
 
-    public Integer getUage() {
-        return uage;
+    public String getUserKey() {
+        return userKey;
     }
 
-    public void setUage(Integer uage) {
-        this.uage = uage;
+    public void setUserKey(String userKey) {
+        this.userKey = userKey;
     }
 
-    public String getTel() {
-        return tel;
+    public Integer getLocked() {
+        return locked;
     }
 
-    public void setTel(String tel) {
-        this.tel = tel;
-    }
-
-    public String getCard() {
-        return card;
-    }
-
-    public void setCard(String card) {
-        this.card = card;
-    }
-
-    public Date getCreatedata() {
-        return createdata;
-    }
-
-    public void setCreatedata(Date createdata) {
-        this.createdata = createdata;
-    }
-
-    public Integer getState() {
-        return state;
-    }
-
-    public void setState(Integer state) {
-        this.state = state;
+    public void setLocked(Integer locked) {
+        this.locked = locked;
     }
 }

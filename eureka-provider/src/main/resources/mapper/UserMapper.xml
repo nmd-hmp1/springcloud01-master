@@ -3,77 +3,128 @@
 <mapper namespace="com.zking.eurekaprovider.mapper.UserMapper" >
   <resultMap id="BaseResultMap" type="com.zking.eurekaprovider.model.User" >
     <constructor >
-      <arg column="uid" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="uname" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="usex" jdbcType="CHAR" javaType="java.lang.String" />
-      <arg column="uage" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="tel" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="card" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="createdata" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="state" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <idArg column="user_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="user_AccountNmber" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_cipher" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_key" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="locked" jdbcType="INTEGER" javaType="java.lang.Integer" />
     </constructor>
   </resultMap>
+
+  <resultMap id="permissionResultMap" type="com.zking.eurekaprovider.model.Permission" >
+
+      <id column="permission_id" property="permissionId" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <result column="permission_name" property="permissionName" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <result column="level" property="level" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <result column="parent_permission_id" property="parentPermissionId" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <result column="available" property="available" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <result column="url" property="url" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <result column="icon" property="icon" jdbcType="VARCHAR" javaType="java.lang.String" />
+
+  </resultMap>
+  <resultMap id="RoleBaseResultMap" type="com.zking.eurekaprovider.model.Role" >
+
+      <id column="t_role_id" property="tRoleId" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <result column="t_role_name" property="tRoleName" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <result column="t_role_available" property="tRoleAvailable" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <result column="t_role_description" property="tRoleDescription" jdbcType="VARCHAR" javaType="java.lang.String" />
+
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    user_id, user_AccountNmber, user_cipher, user_key, locked
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.zking.eurekaprovider.model.User" >
+    select
+    <include refid="Base_Column_List" />
+    from t_user
+    where user_AccountNmber = #{userAccountnmber,jdbcType=VARCHAR}
+  </select>
+  <select id="listPermissionsByUserName" resultMap="permissionResultMap"
+          parameterType="com.zking.eurekaprovider.model.User">
+     select distinct p.permission_id,p.permission_name,p.available,p.url,p.parent_permission_id,p.icon
+    from t_user u inner join t_role_user ur on u.user_id = ur.uid inner join t_role r on ur.rid = r.t_role_id
+      inner join t_role_permission rp on r.t_role_id = rp.rid inner join t_permission p on rp.pid = p.permission_id
+    where r.t_role_available = 1 and p.available = 1 and u.user_AccountNmber =  #{userAccountnmber,jdbcType=VARCHAR} and p.level=1
+  </select>
+  <select id="listRolesByUserName" resultMap="RoleBaseResultMap" parameterType="com.zking.eurekaprovider.model.User">
+    select distinct r.t_role_name,r.t_role_id,r.t_role_available,r.t_role_description
+    from t_user u inner join t_role_user ur on u.user_id = ur.uid inner join t_role r on ur.rid = r.t_role_id
+    where r.t_role_available = 1 and u.user_AccountNmber =  #{userAccountnmber,jdbcType=VARCHAR}
+
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_user
+    where user_id = #{userId,jdbcType=BIGINT}
+  </delete>
   <insert id="insert" parameterType="com.zking.eurekaprovider.model.User" >
-    insert into tuser (uid, uname, usex, 
-      uage, tel, card, createdata, 
-      state)
-    values (#{uid,jdbcType=INTEGER}, #{uname,jdbcType=VARCHAR}, #{usex,jdbcType=CHAR}, 
-      #{uage,jdbcType=INTEGER}, #{tel,jdbcType=VARCHAR}, #{card,jdbcType=VARCHAR}, #{createdata,jdbcType=TIMESTAMP}, 
-      #{state,jdbcType=INTEGER})
+    insert into t_user (user_id, user_AccountNmber, user_cipher,
+    user_key, locked)
+    values (#{userId,jdbcType=BIGINT}, #{userAccountnmber,jdbcType=VARCHAR}, #{userCipher,jdbcType=VARCHAR},
+    #{userKey,jdbcType=VARCHAR}, #{locked,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.zking.eurekaprovider.model.User" >
-    insert into tuser
+    insert into t_user
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="uid != null" >
-        uid,
+      <if test="userId != null" >
+        user_id,
       </if>
-      <if test="uname != null" >
-        uname,
+      <if test="userAccountnmber != null" >
+        user_AccountNmber,
       </if>
-      <if test="usex != null" >
-        usex,
+      <if test="userCipher != null" >
+        user_cipher,
       </if>
-      <if test="uage != null" >
-        uage,
+      <if test="userKey != null" >
+        user_key,
       </if>
-      <if test="tel != null" >
-        tel,
-      </if>
-      <if test="card != null" >
-        card,
-      </if>
-      <if test="createdata != null" >
-        createdata,
-      </if>
-      <if test="state != null" >
-        state,
+      <if test="locked != null" >
+        locked,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="uid != null" >
-        #{uid,jdbcType=INTEGER},
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
       </if>
-      <if test="uname != null" >
-        #{uname,jdbcType=VARCHAR},
+      <if test="userAccountnmber != null" >
+        #{userAccountnmber,jdbcType=VARCHAR},
       </if>
-      <if test="usex != null" >
-        #{usex,jdbcType=CHAR},
+      <if test="userCipher != null" >
+        #{userCipher,jdbcType=VARCHAR},
       </if>
-      <if test="uage != null" >
-        #{uage,jdbcType=INTEGER},
+      <if test="userKey != null" >
+        #{userKey,jdbcType=VARCHAR},
       </if>
-      <if test="tel != null" >
-        #{tel,jdbcType=VARCHAR},
-      </if>
-      <if test="card != null" >
-        #{card,jdbcType=VARCHAR},
-      </if>
-      <if test="createdata != null" >
-        #{createdata,jdbcType=TIMESTAMP},
-      </if>
-      <if test="state != null" >
-        #{state,jdbcType=INTEGER},
+      <if test="locked != null" >
+        #{locked,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zking.eurekaprovider.model.User" >
+    update t_user
+    <set >
+      <if test="userAccountnmber != null" >
+        user_AccountNmber = #{userAccountnmber,jdbcType=VARCHAR},
+      </if>
+      <if test="userCipher != null" >
+        user_cipher = #{userCipher,jdbcType=VARCHAR},
+      </if>
+      <if test="userKey != null" >
+        user_key = #{userKey,jdbcType=VARCHAR},
+      </if>
+      <if test="locked != null" >
+        locked = #{locked,jdbcType=INTEGER},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zking.eurekaprovider.model.User" >
+    update t_user
+    set user_AccountNmber = #{userAccountnmber,jdbcType=VARCHAR},
+      user_cipher = #{userCipher,jdbcType=VARCHAR},
+      user_key = #{userKey,jdbcType=VARCHAR},
+      locked = #{locked,jdbcType=INTEGER}
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
 </mapper>

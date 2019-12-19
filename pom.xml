@@ -26,7 +26,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><!--常规配置-->
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.8</java.version>
-
+    <shiro.version>1.2.5</shiro.version>
     <spring-cloud.version>Greenwich.SR4</spring-cloud.version>
   </properties>
 <!--添加子模块-->
@@ -74,11 +74,11 @@
       <artifactId>spring-cloud-starter-openfeign</artifactId>
     </dependency>
 
-    <!--<dependency>-->
-      <!--<groupId>cn.hutool</groupId>-->
-      <!--<artifactId>hutool-all</artifactId>-->
-      <!--<version>5.0.6</version>-->
-    <!--</dependency>-->
+    <dependency>
+      <groupId>cn.hutool</groupId>
+      <artifactId>hutool-all</artifactId>
+      <version>5.0.6</version>
+    </dependency>
     <dependency>
       <!-- 配置中心的客户端依赖 -->
       <groupId>org.springframework.cloud</groupId>
@@ -126,7 +126,45 @@
       <artifactId>spring-boot-starter-data-redis</artifactId>
     </dependency>
 
-
+    <!-- **********************  shiro配置  ********************** -->
+    <dependency>
+      <groupId>org.apache.shiro</groupId>
+      <artifactId>shiro-core</artifactId>
+      <version>${shiro.version}</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>slf4j-api</artifactId>
+          <groupId>org.slf4j</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.shiro</groupId>
+      <artifactId>shiro-web</artifactId>
+      <version>${shiro.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.shiro</groupId>
+      <artifactId>shiro-ehcache</artifactId>
+      <version>${shiro.version}</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>ehcache-core</artifactId>
+          <groupId>net.sf.ehcache</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.shiro</groupId>
+      <artifactId>shiro-spring</artifactId>
+      <version>${shiro.version}</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.crazycake/shiro-redis -->
+    <dependency>
+      <groupId>org.crazycake</groupId>
+      <artifactId>shiro-redis</artifactId>
+      <version>3.1.0</version>
+    </dependency>
 
   </dependencies>
 
@@ -143,33 +181,33 @@
   </dependencyManagement>
 
   <build>
-    <!--<plugins>-->
-      <!--<plugin>-->
-        <!--<groupId>org.springframework.boot</groupId>-->
-        <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
-      <!--</plugin>-->
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
 
 
 
 
-      <!--<plugin>-->
-        <!--<groupId>org.mybatis.generator</groupId>-->
-        <!--<artifactId>mybatis-generator-maven-plugin</artifactId>-->
-        <!--<version>1.3.2</version>-->
-        <!--<dependencies>-->
-          <!--&lt;!&ndash;使用Mybatis-generator插件不能使用太高版本的mysql驱动 &ndash;&gt;-->
-          <!--<dependency>-->
-            <!--<groupId>mysql</groupId>-->
-            <!--<artifactId>mysql-connector-java</artifactId>-->
-            <!--<version>5.1.30</version>-->
-          <!--</dependency>-->
-        <!--</dependencies>-->
-        <!--<configuration>-->
-          <!--<overwrite>true</overwrite>-->
-        <!--</configuration>-->
-      <!--</plugin>-->
+      <plugin>
+        <groupId>org.mybatis.generator</groupId>
+        <artifactId>mybatis-generator-maven-plugin</artifactId>
+        <version>1.3.2</version>
+        <dependencies>
+          <!--使用Mybatis-generator插件不能使用太高版本的mysql驱动 -->
+          <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.30</version>
+          </dependency>
+        </dependencies>
+        <configuration>
+          <overwrite>true</overwrite>
+        </configuration>
+      </plugin>
 
-    <!--</plugins>-->
+    </plugins>
   </build>
 
 
