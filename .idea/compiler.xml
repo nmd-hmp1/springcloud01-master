@@ -12,7 +12,6 @@
         <module name="eureka-provider" />
         <module name="eureka-server" />
         <module name="gateway" />
-        <module name="l" />
         <module name="vo" />
       </profile>
     </annotationProcessing>
