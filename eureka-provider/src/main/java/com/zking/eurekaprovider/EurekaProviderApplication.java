@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @EnableEurekaClient
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @MapperScan("com.zking.eurekaprovider.mapper")
 @EnableAutoConfiguration(exclude = DataSourceAutoConfiguration.class)
+@EnableScheduling
 public class EurekaProviderApplication {
 
 	public static void main(String[] args) {

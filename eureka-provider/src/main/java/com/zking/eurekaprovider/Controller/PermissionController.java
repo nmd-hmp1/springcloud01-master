@@ -57,7 +57,7 @@ jsonData.setCode(0);
         jsonData.setCode(0);
         return  jsonData;
     }
-    @MyLog(value = "test")
+    @MyLog(value = "用户增加")
     @RequestMapping("abc")
     public JsonData abcrty(String ac){
         List<Role> listroles = roleMapper.listroles();
