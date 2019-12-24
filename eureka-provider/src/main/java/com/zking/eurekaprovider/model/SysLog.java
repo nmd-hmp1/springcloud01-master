@@ -17,7 +17,7 @@ public class SysLog implements Serializable {
     private String ip; //ip地址
 
     private Date createDate; //操作时间
-    //创建getter和setter方法
+    //创建getter和setter方法oo
 
 
     public Long getId() {
