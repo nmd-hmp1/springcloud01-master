@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.eurekaprovideranzlyze.mapper.AttentionMapper">
+    <resultMap id="BaseResultMap" type="com.zking.eurekaprovideranzlyze.model.Attention">
+        <constructor>
+            <idArg column="attention_id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="cid" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="state" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="affirmtime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+            <arg column="canceltime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        </constructor>
+    </resultMap>
+
+    <resultMap id="state" type="com.zking.eurekaprovideranzlyze.vo.AttentionVo">
+        <id column="attention_id" property="attentionId" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+        <result column="cid" property="cid" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+        <result column="state" property="state" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="affirmtime" property="affirmtime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        <result column="canceltime" property="canceltime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    attention_id, cid, state, affirmtime, canceltime
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_attention
+        where attention_id = #{attentionId,jdbcType=INTEGER}
+    </select>
+    <select id="selectState" resultMap="state" resultType="com.zking.eurekaprovideranzlyze.vo.AttentionVo">
+      select
+        state,COUNT(state) count
+      FROM t_attention GROUP BY state
+  </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_attention
+    where attention_id = #{attentionId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.zking.eurekaprovideranzlyze.model.Attention">
+    insert into t_attention (attention_id, cid, state, 
+      affirmtime, canceltime)
+    values (#{attentionId,jdbcType=INTEGER}, #{cid,jdbcType=INTEGER}, #{state,jdbcType=VARCHAR}, 
+      #{affirmtime,jdbcType=TIMESTAMP}, #{canceltime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.zking.eurekaprovideranzlyze.model.Attention">
+        insert into t_attention
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="attentionId != null">
+                attention_id,
+            </if>
+            <if test="cid != null">
+                cid,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="affirmtime != null">
+                affirmtime,
+            </if>
+            <if test="canceltime != null">
+                canceltime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="attentionId != null">
+                #{attentionId,jdbcType=INTEGER},
+            </if>
+            <if test="cid != null">
+                #{cid,jdbcType=INTEGER},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=VARCHAR},
+            </if>
+            <if test="affirmtime != null">
+                #{affirmtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="canceltime != null">
+                #{canceltime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.zking.eurekaprovideranzlyze.model.Attention">
+        update t_attention
+        <set>
+            <if test="cid != null">
+                cid = #{cid,jdbcType=INTEGER},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=VARCHAR},
+            </if>
+            <if test="affirmtime != null">
+                affirmtime = #{affirmtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="canceltime != null">
+                canceltime = #{canceltime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where attention_id = #{attentionId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.zking.eurekaprovideranzlyze.model.Attention">
+    update t_attention
+    set cid = #{cid,jdbcType=INTEGER},
+      state = #{state,jdbcType=VARCHAR},
+      affirmtime = #{affirmtime,jdbcType=TIMESTAMP},
+      canceltime = #{canceltime,jdbcType=TIMESTAMP}
+    where attention_id = #{attentionId,jdbcType=INTEGER}
+  </update>
+</mapper>
