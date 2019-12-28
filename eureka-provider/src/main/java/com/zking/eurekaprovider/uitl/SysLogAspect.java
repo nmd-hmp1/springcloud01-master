@@ -61,6 +61,8 @@ public class SysLogAspect {
 
         //请求的参数
         Object[] args = joinPoint.getArgs();
+        System.out.println(args);
+
         //将参数所在的数组转换成json
         String params = JSON.toJSONString(args);
         System.out.println("params+"+params);

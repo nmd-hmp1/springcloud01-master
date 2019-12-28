@@ -14,10 +14,10 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 @EnableAutoConfiguration(exclude = DataSourceAutoConfiguration.class)
 public class GatewayApplication {
-	@Bean
-	public HelloFilter tokenFilter() {
-		return new HelloFilter();
-	}
+//	@Bean
+//	public HelloFilter tokenFilter() {
+//		return new HelloFilter();
+//	}
 	public static void main(String[] args) {
 		SpringApplication.run(GatewayApplication.class, args);
 	}

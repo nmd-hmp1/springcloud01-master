@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zking.eurekaprovider.mapper.PermissionMapper" >
+  <!--<cache type="com.zking.eurekaprovider.Redis.RedisCache" eviction="LRU" flushInterval="6000000" size="1024" readOnly="false"/>-->
   <resultMap id="BaseResultMap" type="com.zking.eurekaprovider.model.Permission" >
     <constructor >
       <idArg column="permission_id" jdbcType="BIGINT" javaType="java.lang.Long" />
@@ -23,10 +24,7 @@
   </select>
   <select id="listPermissions" resultMap="BaseResultMap"
           parameterType="com.zking.eurekaprovider.model.Permission">
- select distinct p.permission_id,p.permission_name,p.available,p.url,p.parent_permission_id,p.icon,p.level
-    from t_user u inner join t_role_user ur on u.user_id = ur.uid inner join t_role r on ur.rid = r.t_role_id
-      inner join t_role_permission rp on r.t_role_id = rp.rid inner join t_permission p on rp.pid = p.permission_id
-    where r.t_role_available = 1 and p.available = 1  and p.parent_permission_id=#{permissionId,jdbcType=BIGINT}
+ select *  from  t_permission  where  parent_permission_id=#{permissionId,jdbcType=BIGINT}
 
   </select>
   <select id="getPermission" resultMap="BaseResultMap" parameterType="com.zking.eurekaprovider.model.Role">
@@ -35,13 +33,33 @@
       inner join t_role_permission rp on r.t_role_id = rp.rid inner join t_permission p on rp.pid = p.permission_id
     where r.t_role_available = 1 and p.available = 1  and p.level=1  and r.t_role_id=#{tRoleId,jdbcType=BIGINT}
   </select>
-
+  <select id="getPermissions" resultType="com.zking.eurekaprovider.model.Permission" resultMap="BaseResultMap">
+select distinct p.permission_id,p.permission_name,p.available,p.url,p.parent_permission_id,p.icon,p.level
+    from t_user u inner join t_role_user ur on u.user_id = ur.uid inner join t_role r on ur.rid = r.t_role_id
+      inner join t_role_permission rp on r.t_role_id = rp.rid inner join t_permission p on rp.pid = p.permission_id
+    where r.t_role_available = 1 and p.available = 1  and p.level=1
+  </select>
+  <select id="getPermissionsa" resultType="com.zking.eurekaprovider.model.Permission" resultMap="BaseResultMap">
+ select distinct p.permission_id,p.permission_name,p.available,p.url,p.parent_permission_id,p.icon,p.level
+    from t_user u inner join t_role_user ur on u.user_id = ur.uid inner join t_role r on ur.rid = r.t_role_id
+      inner join t_role_permission rp on r.t_role_id = rp.rid inner join t_permission p on rp.pid = p.permission_id
+    where r.t_role_available = 1 and p.available = 1  and p.parent_permission_id=#{permissionId,jdbcType=BIGINT}
+  </select>
+  <select id="LISTperms" resultType="com.zking.eurekaprovider.model.Permission" resultMap="BaseResultMap">
+ select *  from  t_permission  where level=1
+  </select>
 
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from t_permission
     where permission_id = #{permissionId,jdbcType=BIGINT}
   </delete>
+  <delete id="deldate" parameterType="com.zking.vo.model.RolePermission">
+DELETE FROM   t_role_permission  WHERE   rid=#{rid,jdbcType=BIGINT}  and   pid=#{pid,jdbcType=BIGINT}
+  </delete>
+
+
+
   <insert id="insert" parameterType="com.zking.eurekaprovider.model.Permission" >
     insert into t_permission (permission_id, permission_name, level, 
       parent_permission_id, available, url, 
@@ -99,6 +117,10 @@
       </if>
     </trim>
   </insert>
+  <insert id="intdate" parameterType="com.zking.vo.model.RolePermission">
+    insert into t_role_permission (rid,pid)
+    values (#{rid,jdbcType=BIGINT},#{pid,jdbcType=BIGINT})
+  </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.zking.eurekaprovider.model.Permission" >
     update t_permission
     <set >
@@ -133,4 +155,6 @@
       icon = #{icon,jdbcType=VARCHAR}
     where permission_id = #{permissionId,jdbcType=BIGINT}
   </update>
+
+
 </mapper>

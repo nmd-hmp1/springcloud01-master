@@ -13,7 +13,7 @@ public class ScheduleTest {
 
     @Scheduled(cron = "0/5 * * * * ?")
     public void test() {
-        System.out.println("55555555555554567");
+//        System.out.println("55555555555554567");
 
         LOGGER.info(new DateTime().toString()+"123q");
     }

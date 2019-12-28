@@ -22,7 +22,7 @@ public class RoleServerImpl implements RoleServer {
     }
 
     @Override
-    public int uprple(Role role) {
+    public int intrple(Role role) {
         return 0;
     }
 

@@ -9,11 +9,15 @@ import com.zking.eurekaprovider.server.PerssionServer;
 import com.zking.eurekaprovider.server.UserServer;
 import com.zking.eurekaprovider.uitl.JsonData;
 import com.zking.eurekaprovider.uitl.MyLog;
+import com.zking.vo.model.RolePermission;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("Permission")
@@ -40,31 +44,66 @@ jsonData.setResult(permissions);
 jsonData.setCode(0);
     return  jsonData;
 }
-
+    @MyLog(value = "查询角色和改角色拥有的权限")
     @RequestMapping("getPermissiona")
     public JsonData getPrtmissions(){
-        List<Role> listroles = roleMapper.listroles();
-        System.out.println(listroles.size());
-        for (Role r :listroles) {
-            System.out.println(r.gettRoleName());
+        Map<String,Object> map=new HashMap<>();
+        List<Permission> permissionsa = perssionServer.getPermissions();
 
+
+        List<Role> listroles = roleMapper.listroles();
+        for (Role r :listroles) {
             List<Permission> permissions = perssionServer.getPermission(r);
             r.setPermission(permissions);
         }
-        jsonData=new JsonData();
 
-        jsonData.setResult(listroles);
+        map.put("permissionsa",permissionsa);
+        map.put("listroles",listroles);
+        jsonData=new JsonData();
+        jsonData.setResult(map);
         jsonData.setCode(0);
         return  jsonData;
     }
-    @MyLog(value = "用户增加")
-    @RequestMapping("abc")
-    public JsonData abcrty(String ac){
-        List<Role> listroles = roleMapper.listroles();
-        jsonData=new JsonData();
 
-        jsonData.setResult(listroles);
+
+
+
+    @MyLog(value = "权限修改")
+    @RequestMapping("uppermission")
+    public JsonData uppermission(String ac,Long rid,String li){
+        jsonData=new JsonData();
+        String[] split = ac.split("-");
+        String[] splits = li.split("-");
+        List<RolePermission>   del=new ArrayList<>();
+        List<RolePermission>   inte=new ArrayList<>();
+         for (  String s:splits ) {
+            if(ac.contains(s)){
+
+            }else{
+                System.out.println("不包含"+s);
+                //删除
+                RolePermission rolePermission=new RolePermission();
+                rolePermission.setPid((long)Integer.parseInt(s));
+                rolePermission.setRid(rid);
+                perssionServer.delPermission(rolePermission);
+            }
+        }
+        for (  String s:split ) {
+            if(li.contains(s)){
+
+            }else{
+
+                RolePermission rolePermission=new RolePermission();
+                rolePermission.setPid((long)Integer.parseInt(s));
+                rolePermission.setRid(rid);
+                //增加
+                perssionServer.intPermission(rolePermission);
+            }
+        }
         jsonData.setCode(0);
+         jsonData.setMessage("修改！");
         return  jsonData;
     }
+
+
 }

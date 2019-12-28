@@ -9,21 +9,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class HelloController {
 //@Value("${server.port}")
 //private  String na;
-
-
-
+//
+//
+//
 //    @Value("${hello}")
 //private  String hello;
-
+//
 //    @Value("${username}")
 //private  String ds_username;
-
+//
 //    @Value("${password}")
 //private  String ds_password;
-
-
-
-
+//
+//
+//
+//
 //    @Value("${spring.redis.password}")
 //    private  String redis_password;
 //@RequestMapping("hello")

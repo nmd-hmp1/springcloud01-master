@@ -11,12 +11,12 @@ public class Jobs {
 
     @Scheduled(fixedDelay=ONE_Minute)
     public void fixedDelayJob(){
-        System.out.println(" >>fixedDelay执行....");
+//        System.out.println(" >>fixedDelay执行....");
     }
 
     @Scheduled(fixedRate=ONE_Minute)
     public void fixedRateJob(){
-        System.out.println(" >>fixedRate执行....");
+//        System.out.println(" >>fixedRate执行....");
     }
 
 //    @Scheduled(cron="0 15 3 * * ?")

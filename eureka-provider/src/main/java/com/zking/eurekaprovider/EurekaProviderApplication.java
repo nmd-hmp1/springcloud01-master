@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @MapperScan("com.zking.eurekaprovider.mapper")
 @EnableAutoConfiguration(exclude = DataSourceAutoConfiguration.class)
-@EnableScheduling
+//@EnableScheduling
 public class EurekaProviderApplication {
 
 	public static void main(String[] args) {

@@ -16,7 +16,7 @@ public interface RoleServer {
 List<Role> getRole();
 
 
-int uprple(Role role);
+int intrple(Role role);
 
 int  delrole(Role role);
 

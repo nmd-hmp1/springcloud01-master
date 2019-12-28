@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.eurekaprovider.mapper.GjcMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.vo.model.Gjc" >
+    <constructor >
+      <idArg column="gid" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="gjc" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="uid" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="createdata" jdbcType="TIMESTAMP"  javaType="java.lang.String" />
+      <arg column="action" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="gzmc" jdbcType="LONGVARCHAR"  javaType="java.lang.String"/>
+      <arg column="hfnr" jdbcType="LONGVARCHAR"  javaType="java.lang.String"/>
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.zking.vo.model.GjcWithBLOBs" >
+    <constructor >
+      <idArg column="gid" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="gjc" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="uid" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="createdata" jdbcType="TIMESTAMP" javaType="java.lang.String"  />
+      <arg column="action" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="gzmc" jdbcType="LONGVARCHAR"   javaType="java.lang.String"/>
+      <arg column="hfnr" jdbcType="LONGVARCHAR" javaType="java.lang.String"  />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    gid, gjc, uid, createdata, action ,gzmc,hfnr
+  </sql>
+  <sql id="Blob_Column_List" >
+    gzmc, hfnr
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_gjc
+    where gid = #{gid,jdbcType=INTEGER}
+  </select>
+  <select id="list" parameterType="com.zking.vo.model.Gjc" resultMap="ResultMapWithBLOBs">
+
+select   *       from  t_gjc p where    p.gjc LIKE  concat('%',#{gjc,jdbcType=VARCHAR },'%')  order by  p.createdata    desc
+
+
+
+  </select>
+  <select id="GjcWithBLOBsActionList" resultMap="ResultMapWithBLOBs"
+          parameterType="com.zking.vo.model.GjcWithBLOBs">
+select   *       from  t_gjc p where  p.action=#{action,jdbcType=INTEGER}  and  p.gjc LIKE  concat('%',#{gjc,jdbcType=VARCHAR },'%')  order by  p.createdata    desc
+
+
+
+
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_gjc
+    where gid = #{gid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zking.vo.model.GjcWithBLOBs" >
+    insert into t_gjc (gid, gjc, uid, 
+      createdata, action, gzmc, 
+      hfnr)
+    values (#{gid,jdbcType=INTEGER}, #{gjc,jdbcType=VARCHAR}, #{uid,jdbcType=BIGINT}, 
+      #{createdata,jdbcType=TIMESTAMP}, #{action,jdbcType=INTEGER}, #{gzmc,jdbcType=LONGVARCHAR}, 
+      #{hfnr,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zking.vo.model.GjcWithBLOBs" >
+    insert into t_gjc
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gid != null" >
+        gid,
+      </if>
+      <if test="gjc != null" >
+        gjc,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="createdata != null" >
+        createdata,
+      </if>
+      <if test="action != null" >
+        action,
+      </if>
+      <if test="gzmc != null" >
+        gzmc,
+      </if>
+      <if test="hfnr != null" >
+        hfnr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gid != null" >
+        #{gid,jdbcType=INTEGER},
+      </if>
+      <if test="gjc != null" >
+        #{gjc,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="createdata != null" >
+        #{createdata,jdbcType=TIMESTAMP},
+      </if>
+      <if test="action != null" >
+        #{action,jdbcType=INTEGER},
+      </if>
+      <if test="gzmc != null" >
+        #{gzmc,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="hfnr != null" >
+        #{hfnr,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zking.vo.model.GjcWithBLOBs" >
+    update t_gjc
+    <set >
+      <if test="gjc != null" >
+        gjc = #{gjc,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="createdata != null" >
+        createdata = #{createdata,jdbcType=TIMESTAMP},
+      </if>
+      <if test="action != null" >
+        action = #{action,jdbcType=INTEGER},
+      </if>
+      <if test="gzmc != null" >
+        gzmc = #{gzmc,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="hfnr != null" >
+        hfnr = #{hfnr,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where gid = #{gid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zking.vo.model.GjcWithBLOBs" >
+    update t_gjc
+    set gjc = #{gjc,jdbcType=VARCHAR},
+      uid = #{uid,jdbcType=BIGINT},
+      createdata = #{createdata,jdbcType=TIMESTAMP},
+      action = #{action,jdbcType=INTEGER},
+      gzmc = #{gzmc,jdbcType=LONGVARCHAR},
+      hfnr = #{hfnr,jdbcType=LONGVARCHAR}
+    where gid = #{gid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zking.vo.model.Gjc" >
+    update t_gjc
+    set gjc = #{gjc,jdbcType=VARCHAR},
+      uid = #{uid,jdbcType=BIGINT},
+      createdata = #{createdata,jdbcType=TIMESTAMP},
+      action = #{action,jdbcType=INTEGER}
+    where gid = #{gid,jdbcType=INTEGER}
+  </update>
+</mapper>
