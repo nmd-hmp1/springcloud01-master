@@ -30,6 +30,7 @@ public class MenuAnalysisController {
             jsonData.setCode(-1);
         }
         return jsonData;
+
     }
 
     @RequestMapping("date")
