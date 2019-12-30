@@ -9,9 +9,9 @@
 
 	</parent>
 	<groupId>com.zking</groupId>
-	<artifactId>eureka-provider-attention</artifactId>
+	<artifactId>eureka-provider-analyze</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>eureka-provider-attention</name>
+	<name>eureka-provider-analyze</name>
 	<packaging>jar</packaging>
 	<description>是否关注生产者</description>
 
