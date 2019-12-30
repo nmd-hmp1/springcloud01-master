@@ -8,4 +8,6 @@ import java.util.List;
 @Transactional
 public interface AttentionServer {
     List<AttentionVo> selectState();
+    List<AttentionVo> selectDate();
+    List<AttentionVo> selectDate1();
 }

@@ -18,4 +18,14 @@ public class AttentionServerImp implements AttentionServer {
     public List<AttentionVo> selectState() {
         return attentionMapper.selectState();
     }
+
+    @Override
+    public List<AttentionVo> selectDate() {
+        return attentionMapper.selectDate();
+    }
+
+    @Override
+    public List<AttentionVo> selectDate1() {
+        return attentionMapper.selectDate1();
+    }
 }

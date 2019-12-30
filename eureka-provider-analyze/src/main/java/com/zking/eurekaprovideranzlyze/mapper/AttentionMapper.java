@@ -16,6 +16,10 @@ public interface AttentionMapper {
 
     List<AttentionVo> selectState();
 
+    List<AttentionVo> selectDate();
+
+    List<AttentionVo> selectDate1();
+
     int updateByPrimaryKeySelective(Attention record);
 
     int updateByPrimaryKey(Attention record);

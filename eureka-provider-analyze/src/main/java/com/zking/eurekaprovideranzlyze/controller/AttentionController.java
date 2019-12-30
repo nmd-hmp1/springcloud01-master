@@ -25,4 +25,22 @@ public class AttentionController {
         return  jsonData;
     }
 
+    @RequestMapping("selectDate")
+    public JsonData selectDate(){
+        JsonData jsonData = new JsonData();
+        List<AttentionVo> list = attentionServer.selectDate();
+        jsonData.setResult(list);
+        jsonData.setCode(0);
+        return  jsonData;
+    }
+
+    @RequestMapping("selectDate1")
+    public JsonData selectDate1(){
+        JsonData jsonData = new JsonData();
+        List<AttentionVo> list = attentionServer.selectDate1();
+        jsonData.setResult(list);
+        jsonData.setCode(0);
+        return  jsonData;
+    }
+
 }

@@ -15,8 +15,7 @@
         <id column="attention_id" property="attentionId" jdbcType="INTEGER" javaType="java.lang.Integer"/>
         <result column="cid" property="cid" jdbcType="INTEGER" javaType="java.lang.Integer"/>
         <result column="state" property="state" jdbcType="VARCHAR" javaType="java.lang.String"/>
-        <result column="affirmtime" property="affirmtime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
-        <result column="canceltime" property="canceltime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        <result column="click_date" property="click_date" />
     </resultMap>
     <sql id="Base_Column_List">
     attention_id, cid, state, affirmtime, canceltime
@@ -32,6 +31,50 @@
         state,COUNT(state) count
       FROM t_attention GROUP BY state
   </select>
+    <select id="selectDate" resultMap="state" resultType="com.zking.eurekaprovideranzlyze.vo.AttentionVo">
+    select a.click_date,ifnull(b.count,0) as count
+    from (
+        SELECT curdate() as click_date
+        union all
+        SELECT date_sub(curdate(), interval 1 day) as click_date
+        union all
+        SELECT date_sub(curdate(), interval 2 day) as click_date
+        union all
+        SELECT date_sub(curdate(), interval 3 day) as click_date
+        union all
+        SELECT date_sub(curdate(), interval 4 day) as click_date
+        union all
+        SELECT date_sub(curdate(), interval 5 day) as click_date
+        union all
+        SELECT date_sub(curdate(), interval 6 day) as click_date
+    ) a left join (
+      select date(affirmtime) as datetime, COUNT(state) as count
+      from t_attention where state='1'
+      group by date(affirmtime)
+    ) b on a.click_date = b.datetime;
+    </select>
+    <select id="selectDate1" resultMap="state" resultType="com.zking.eurekaprovideranzlyze.vo.AttentionVo">
+    select a.click_date,ifnull(b.count,0) as count
+    from (
+        SELECT curdate() as click_date
+        union all
+        SELECT date_sub(curdate(), interval 1 day) as click_date
+        union all
+        SELECT date_sub(curdate(), interval 2 day) as click_date
+        union all
+        SELECT date_sub(curdate(), interval 3 day) as click_date
+        union all
+        SELECT date_sub(curdate(), interval 4 day) as click_date
+        union all
+        SELECT date_sub(curdate(), interval 5 day) as click_date
+        union all
+        SELECT date_sub(curdate(), interval 6 day) as click_date
+    ) a left join (
+      select date(canceltime) as datetime, COUNT(state) as count
+      from t_attention where state='2'
+      group by date(canceltime)
+    ) b on a.click_date = b.datetime;
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_attention
     where attention_id = #{attentionId,jdbcType=INTEGER}
